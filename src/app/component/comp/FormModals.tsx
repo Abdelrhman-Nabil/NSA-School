@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { FormContaierProps } from "./formContianer";
-import { deleteClass, deleteExam, deleteStudent, deleteSubject, deleteTeacher } from "@/lib/actions";
+import { deleteAssignment, deleteClass, deleteExam, deleteParent, deleteStudent, deleteSubject, deleteTeacher } from "@/lib/actions";
 import { useFormState } from "react-dom";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
@@ -16,10 +16,9 @@ const deleteActionMap:any = {
   teacher: deleteTeacher,
   student: deleteStudent,
   exam: deleteExam,
-// // TODO: OTHER DELETE ACTIONS
-//   parent: deleteSubject,
+  parent: deleteParent,
+  assignment: deleteAssignment,
 //   lesson: deleteSubject,
-//   assignment: deleteSubject,
 //   result: deleteSubject,
 //   attendance: deleteSubject,
 //   event: deleteSubject,
@@ -40,7 +39,12 @@ const ClassForm = dynamic(() => import("../forms/classForm"), {
 const ExamForm = dynamic(() => import("../forms/examForm"), {
   loading: () => <h1>Loading...</h1>,
 });
-
+const ParentForm = dynamic(() => import("../forms/parentForm"), {
+  loading: () => <h1>Loading...</h1>,
+});
+const AssignmentForm = dynamic(() => import("../forms/assignmentForm"), {
+  loading: () => <h1>Loading...</h1>,
+});
 const Forms:{
   [key:string]:(setOpen:Dispatch<SetStateAction<boolean>>,type:"create" | "update" ,data:any ,relatedData?: any)=>JSX.Element
 }={
@@ -80,6 +84,20 @@ const Forms:{
               data={data}
               relatedData={relatedData}
             />
+            ,parent: (setOpen,type, data, relatedData) => 
+              <ParentForm
+                setOpen={setOpen}
+                type={type}
+                data={data}
+                relatedData={relatedData}
+              />
+              ,assignment: (setOpen,type, data, relatedData) => 
+                <AssignmentForm
+                  setOpen={setOpen}
+                  type={type}
+                  data={data}
+                  relatedData={relatedData}
+                />
 
 }
 const FormModal = ({

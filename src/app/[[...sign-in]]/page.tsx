@@ -1,24 +1,27 @@
-'use client'
+"use client";
 
-import * as Clerk from '@clerk/elements/common'
-import * as SignIn from '@clerk/elements/sign-in'
-import { useUser } from '@clerk/nextjs';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import * as Clerk from "@clerk/elements/common";
+import * as SignIn from "@clerk/elements/sign-in";
+import { useUser } from "@clerk/nextjs";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
- const LoginPage=()=>{
+const LoginPage = () => {
   const { isLoaded, isSignedIn, user } = useUser();
-  const route=useRouter();
-  useEffect(()=>{
-    const role=user?.publicMetadata.role;
-    if(role){
-      route.push(`/${role}`)
-    } 
-  },[user,route])
 
-    return(
-  <div className="h-screen flex items-center justify-center bg-[#EDF9FD]">
+  const router = useRouter();
+
+  useEffect(() => {
+    const role = user?.publicMetadata.role;
+
+    if (role) {
+      router.push(`/${role}`);
+    }
+  }, [user, router]);
+
+  return (
+    <div className="h-screen flex items-center justify-center bg-lamaSkyLight">
       <SignIn.Root>
         <SignIn.Step
           name="start"
@@ -26,7 +29,7 @@ import { useEffect } from 'react';
         >
           <h1 className="text-xl font-bold flex items-center gap-2">
             <Image src="/logo.png" alt="" width={24} height={24} />
-            NSA School
+            SchooLama
           </h1>
           <h2 className="text-gray-400">Sign in to your account</h2>
           <Clerk.GlobalError className="text-sm text-red-400" />

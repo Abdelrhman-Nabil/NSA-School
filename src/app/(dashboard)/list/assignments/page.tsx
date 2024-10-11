@@ -79,7 +79,7 @@ const AssignmentsListPage =async ({
         <td className="hidden md:table-cell">{item.lesson.class.name}</td>
         <td className="hidden md:table-cell"> {item.lesson.teacher.name + " " + item.lesson.teacher.surname}</td>
         <td className="hidden md:table-cell">
-         {new Intl.DateTimeFormat("en-US").format(item.dueDate)}
+         {new Intl.DateTimeFormat("en-US").format(item.dueDate  )}
        </td>    <td>
           <div className="flex items-center gap-2">
     

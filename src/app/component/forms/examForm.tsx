@@ -57,7 +57,7 @@ const [state, formAction] = useFormState(
     return (
 
         <form className="flex flex-col gap-8" onSubmit={onSubmit}>
-            <h1 className="text-lg font-semibold ">{type === "create" ? "Create a New Subject" : "Update Subject"}</h1>
+            <h1 className="text-lg font-semibold ">{type === "create" ? "Create a New Exam" : "Update Exam"}</h1>
             <div className="flex justify-between flex-wrap gap-4">
             <InputField
           label="Exam title"
