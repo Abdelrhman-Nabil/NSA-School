@@ -66,7 +66,7 @@ const SubjectForm = ({
       <div className="flex justify-between flex-wrap gap-4">
         <InputField
           label="Subject name"
-          name="surname"
+          name="name"
           defaultValue={data?.name}
           register={register}
           error={errors?.name}

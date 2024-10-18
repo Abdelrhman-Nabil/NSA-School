@@ -58,7 +58,7 @@ CREATE TABLE "Parent" (
     "name" TEXT NOT NULL,
     "surname" TEXT NOT NULL,
     "email" TEXT,
-    "phone" TEXT NOT NULL,
+    "phone" TEXT,
     "address" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -97,8 +97,8 @@ CREATE TABLE "Lesson" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "day" "Day" NOT NULL,
-    "startTime" TIMESTAMP(3) NOT NULL,
-    "endTime" TIMESTAMP(3) NOT NULL,
+    "startTime" TEXT NOT NULL,
+    "endTime" TEXT NOT NULL,
     "subjectId" INTEGER NOT NULL,
     "classId" INTEGER NOT NULL,
     "teacherId" TEXT NOT NULL,
@@ -132,6 +132,8 @@ CREATE TABLE "Assignment" (
 CREATE TABLE "Result" (
     "id" SERIAL NOT NULL,
     "score" INTEGER NOT NULL,
+    "title" TEXT NOT NULL,
+    "subject" TEXT NOT NULL,
     "examId" INTEGER,
     "assignmentId" INTEGER,
     "studentId" TEXT NOT NULL,

@@ -47,7 +47,7 @@ const ClassForm =({
 
   useEffect(() => {
     if (state.success) {
-      toast(`Subject has been ${type === "create" ? "created" : "updated"}!`);
+      toast(`Class has been ${type === "create" ? "created" : "updated"}!`);
       setOpen(false);
       router.refresh();
     }
@@ -57,7 +57,7 @@ const ClassForm =({
       return (
 
         <form className="flex flex-col gap-8" onSubmit={onSubmit}>
-            <h1 className="text-lg font-semibold ">{type === "create" ? "Create a New Subject" : "Update Subject"}</h1>
+            <h1 className="text-lg font-semibold ">{type === "create" ? "Create a New Class" : "Update Class"}</h1>
             <div className="flex justify-between flex-wrap gap-4">
                 <InputField
                     label="Subject Name"

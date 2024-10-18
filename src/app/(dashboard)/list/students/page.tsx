@@ -9,7 +9,7 @@ import { auth } from "@clerk/nextjs/server";
 import Image from "next/image";
 import Link from "next/link";
 
-type teacherList=Student & {classes:Class[]}
+type StudentList=Student & {classes:Class[]}
 
 
 const StudentListPage =  async ({searchParams}: 
@@ -56,7 +56,7 @@ const StudentListPage =  async ({searchParams}:
       : []),
   ];
   
-  const renderRow = (item: teacherList) => (
+  const renderRow = (item: StudentList) => (
     <tr
       key={item.id}
       className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-[#F1F0FF]"

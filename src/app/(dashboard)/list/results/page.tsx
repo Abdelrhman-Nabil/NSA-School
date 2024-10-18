@@ -11,12 +11,10 @@ import { auth } from "@clerk/nextjs/server";
 type resultsList = {
   id: number,
   title: string,
+  className: string,
   studentName: string,
   studentSurname: string,
-  teacherName: string,
-  teacherSurname: string,
   score: number,
-  className: string,
   startTime: Date,
 
 
@@ -41,6 +39,12 @@ const ReusltListPage = async ({
   
     },
     {
+      header: "Subject",
+      accessor: " subject",
+      className: "hidden lg:table-cell",
+    },
+
+    {
       header: "Student",
       accessor: "student",
       className: "hidden md:table-cell",
@@ -49,16 +53,6 @@ const ReusltListPage = async ({
     {
       header: "Score",
       accessor: "score",
-      className: "hidden lg:table-cell",
-    },
-    {
-      header: "Teacher",
-      accessor: "teacher",
-      className: "hidden lg:table-cell",
-    },
-    {
-      header: "class",
-      accessor: " class",
       className: "hidden lg:table-cell",
     },
     {
@@ -86,10 +80,9 @@ const ReusltListPage = async ({
           <h3 className="font-semibold">{item.title}</h3>
         </div>
       </td>
+      <td className="hidden md:table-cell">{item.className}</td>
       <td className="hidden md:table-cell">{item.studentName + " " + item.studentSurname}</td>
       <td className="hidden md:table-cell">{item.score}</td>
-      <td className="hidden md:table-cell">{item.teacherName + " " + item.teacherSurname}</td>
-      <td className="hidden md:table-cell">{item.className}</td>
       {new Intl.DateTimeFormat("en-US").format(item.startTime)}
       <td>
         <div className="flex items-center gap-2">
@@ -103,7 +96,6 @@ const ReusltListPage = async ({
       </td>
     </tr>
   );
-
   const { page, ...queryParams } = searchParams;
 
   const p = page ? parseInt(page) : 1;
@@ -164,8 +156,7 @@ const ReusltListPage = async ({
           include: {
             lesson: {
               select: {
-                teacher: { select: { name: true, surname: true } },
-                class: { select: { name: true } }
+                     subject:{select:{id:true,name:true}}
               }
             }
           }
@@ -174,8 +165,7 @@ const ReusltListPage = async ({
           include: {
             lesson: {
               select: {
-                teacher: { select: { name: true, surname: true } },
-                class: { select: { name: true } }
+                subject:{select:{id:true,name:true}}
               }
             }
           }
@@ -186,6 +176,7 @@ const ReusltListPage = async ({
     }),
     prisma.result.count({ where: query }),
   ]);
+   console.log(dataRes,"000000000000")
   const data = dataRes.map((item) => {
     const assessment = item.exam || item.assignment;
 
@@ -195,12 +186,10 @@ const ReusltListPage = async ({
     return {
       id: item.id,
       title: assessment.title,
+      className: assessment.lesson.subject.name,
       studentName: item.student.name,
       studentSurname: item.student.surname,
-      teacherName: assessment.lesson.teacher.name,
-      teacherSurname: assessment.lesson.teacher.surname,
       score: item.score,
-      className: assessment.lesson.class.name,
       startTime: isExam ? assessment.startTime : assessment.startDate,
     };
   });

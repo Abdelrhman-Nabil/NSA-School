@@ -108,7 +108,7 @@ export const parentSchema = z.object({
     .or(z.literal("")),
   phone: z.string().optional(),
   address: z.string(),
-  students: z.array(z.string()).optional(), // subject ids
+  students: z.array(z.string()).optional(), // Student ids
 
 });
 
@@ -123,3 +123,39 @@ export const assignmentSchema = z.object({
 });
 
 export type AssignmentSchema = z.infer<typeof assignmentSchema>;
+
+
+export const lessonSchema = z.object({
+  id: z.coerce.number().optional(),
+  name: z.string().min(1, { message: "Title name is required!" }),
+  startTime: z.coerce.string({ message: "Start time is required!" }),
+  endTime: z.coerce.string({ message: "End time is required!" }),
+  day: z.enum(["SUNDAY", "MONDAY","MONDAY","WEDNESDAY","THURSDAY"], { message: "Day is required!" }),
+  subjectId: z.coerce.number({ message: "Lesson is required!" }),
+  classId: z.coerce.number({ message: "Class is required!" }),
+  teacherId: z.coerce.string({ message: "teacher is required!" }),
+});
+
+export type LessonSchema = z.infer<typeof lessonSchema>;
+
+export const gradeSchema = z.object({
+  id: z.coerce.number().optional(),
+  level: z.coerce.number().min(1, { message: "Level is required!" }),
+  students: z.array(z.string()).optional(), // subject ids
+  classes: z.array(z.string()).optional(), // subject ids
+
+});
+
+export type GradeSchema = z.infer<typeof gradeSchema>;
+
+export const resultSchema = z.object({
+  id: z.coerce.number().optional(),
+  title: z.string().min(1, { message: "title is required!" }), // Student ids
+  subject: z.string().min(1, { message: "Subject is required!" }),
+  score: z.coerce.number().min(1, { message: "score is required!" }),
+  examId: z.coerce.number().min(1, { message: "Grade is required!" }).optional(),
+  assigmentId: z.coerce.number().min(1, { message: "Class is required!" }).optional(),
+  studentId: z.coerce.string({ message: "student is required!" }),
+});
+
+export type ResultSchema = z.infer<typeof resultSchema>;

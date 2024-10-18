@@ -96,11 +96,11 @@ model Subject {
 }
 
 model Lesson {
-  id        Int      @id @default(autoincrement())
-  name      String
-  day       Day
-  startTime DateTime
-  endTime   DateTime
+  id         Int      @id @default(autoincrement())
+  name       String
+  day        Day
+  startTime  String
+  endTime    String
 
   subjectId   Int
   subject     Subject      @relation(fields: [subjectId], references: [id])
@@ -136,9 +136,10 @@ model Assignment {
 }
 
 model Result {
-  id    Int @id @default(autoincrement())
-  score Int
-
+  id           Int @id @default(autoincrement())
+  score        Int
+  title        String
+  subject      String
   examId       Int?
   exam         Exam?       @relation(fields: [examId], references: [id])
   assignmentId Int?

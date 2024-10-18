@@ -4,16 +4,14 @@ import TableSearch from "@/app/component/comp/TableSearch";
 import FormContaier from "@/app/component/comp/formContianer";
 import prisma from "@/lib/prisma";
 import { ITEM_PER_PAGE } from "@/lib/settings";
-import { Class, Lesson, Prisma, Subject, Teacher } from "@prisma/client";
+import { Grade, Prisma} from "@prisma/client";
 import Image from "next/image";
 import { auth } from "@clerk/nextjs/server";
 
-type LessonList = Lesson & { subject: Subject } & { class: Class } & {
-  teacher: Teacher;
-};
+type GradeList = Grade 
 
 
-const LessonListPage = async ({
+const GradeListPage = async ({
   searchParams,
 }: {
   searchParams: { [key: string]: string | undefined };
@@ -23,23 +21,18 @@ const LessonListPage = async ({
   const { page, ...queryParams } = searchParams;
   const p = page ? parseInt(page) : 1;
 
-  const renderRow = (item: LessonList) => (
+  const renderRow = (item: GradeList) => (
     <tr
       key={item.id}
-      className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-lamaPurpleLight"
+      className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-[#F1F0FF]"
     >
-      <td className="flex items-center gap-4 p-4">{item.subject.name}</td>
-      <td>{item.name}</td>
-      <td>{item.class.name}</td>
-      <td className="hidden md:table-cell">
-        {item.teacher.name + " " + item.teacher.surname}
-      </td>
+      <td className="flex items-center gap-4 p-4">{item.level}</td>
       <td>
         <div className="flex items-center gap-2">
           {role === "admin" && (
             <>
-              <FormContaier table="lesson" type="update" data={item} />
-              <FormContaier table="lesson" type="delete" id={item.id} />
+              <FormContaier table="grade" type="update" data={item} />
+              <FormContaier table="grade" type="delete" id={item.id} />
             </>
           )}
         </div>
@@ -48,21 +41,8 @@ const LessonListPage = async ({
   );
   const columns = [
     {
-      header: "Subject Name",
-      accessor: "name",
-    },
-    {
-      header: "Lesson Name",
-      accessor: "name",
-    },
-    {
-      header: "Class",
-      accessor: "class",
-    },
-    {
-      header: "Teacher",
-      accessor: "teacher",
-      className: "hidden md:table-cell",
+      header: "Level",
+      accessor: "level",
     },
     ...(role === "admin"
       ? [
@@ -75,50 +55,26 @@ const LessonListPage = async ({
   ];
   // URL PARAMS CONDITION
 
-  const query: Prisma.LessonWhereInput = {};
-
-  if (queryParams) {
-    for (const [key, value] of Object.entries(queryParams)) {
-      if (value !== undefined) {
-        switch (key) {
-          case "classId":
-            query.classId = parseInt(value);
-            break;
-          case "teacherId":
-            query.teacherId = value;
-            break;
-          case "search":
-            query.OR = [
-              { subject: { name: { contains: value, mode: "insensitive" } } },
-              { teacher: { name: { contains: value, mode: "insensitive" } } },
-            ];
-            break;
-          default:
-            break;
-        }
-      }
-    }
-  }
+  const query: Prisma.GradeWhereInput = {};
 
   const [data, count] = await prisma.$transaction([
-    prisma.lesson.findMany({
+    prisma.grade.findMany({
       where: query,
       include: {
-        subject: { select: { name: true } },
-        class: { select: { name: true } },
-        teacher: { select: { name: true, surname: true } },
+        students:true,
+        classess:true
       },
       take: ITEM_PER_PAGE,
       skip: ITEM_PER_PAGE * (p - 1),
     }),
-    prisma.lesson.count({ where: query }),
+    prisma.grade.count({ where: query }),
   ]);
 
   return (
     <div className="bg-white p-4 rounded-md flex-1 m-4 mt-0">
       {/* TOP */}
       <div className="flex items-center justify-between">
-        <h1 className="hidden md:block text-lg font-semibold">All Lessons</h1>
+        <h1 className="hidden md:block text-lg font-semibold">All Grade</h1>
         <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
           <TableSearch />
           <div className="flex items-center gap-4 self-end">
@@ -128,7 +84,7 @@ const LessonListPage = async ({
             <button className="w-8 h-8 flex items-center justify-center rounded-full bg-lamaYellow">
               <Image src="/sort.png" alt="" width={14} height={14} />
             </button>
-            {role === "admin" && <FormContaier table="lesson" type="create" />}
+            {role === "admin" && <FormContaier table="grade" type="create" />}
           </div>
         </div>
       </div>
@@ -140,4 +96,4 @@ const LessonListPage = async ({
   );
 };
 
-export default LessonListPage;
+export default GradeListPage;

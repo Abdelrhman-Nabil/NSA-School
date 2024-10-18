@@ -95,7 +95,7 @@ const AssignmentForm =  ({
             <select
               className="ring-[1.5px] ring-gray-300 p-2 rounded-md text-sm w-full"
               {...register("lessonId")}
-              defaultValue={data?.teachers}
+              defaultValue={data?.lessonId}
             >
               {lessons.map(
                 (lesson: { id: string; name: string;}) => (
