@@ -34,6 +34,16 @@ const LessonListPage = async ({
       <td className="hidden md:table-cell">
         {item.teacher.name + " " + item.teacher.surname}
       </td>
+      <td className="hidden md:table-cell">
+        {new Intl.DateTimeFormat("en-GB").format(item.startTime)}
+      </td>     
+      <td className="hidden md:table-cell">
+        {item.startTime.toLocaleTimeString("en-GB", {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: true,
+        })}
+      </td> 
       <td>
         <div className="flex items-center gap-2">
           {role === "admin" && (
@@ -62,6 +72,16 @@ const LessonListPage = async ({
     {
       header: "Teacher",
       accessor: "teacher",
+      className: "hidden md:table-cell",
+    },
+    {
+      header: "Date",
+      accessor: "startTime",
+      className: "hidden md:table-cell",
+    },
+    {
+      header: "Time",
+      accessor: "startTime",
       className: "hidden md:table-cell",
     },
     ...(role === "admin"

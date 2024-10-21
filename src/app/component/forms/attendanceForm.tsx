@@ -3,14 +3,14 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import InputField from "../comp/inputField";
-import { ExamSchema, examSchema, resultSchema, ResultSchema } from "@/lib/formValidationSchemas";
+import { attendaceSchema, AttendaceSchema} from "@/lib/formValidationSchemas";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useFormState } from "react-dom";
-import { createExam, createResult, updateExam, updateResult } from "@/lib/actions";
+import { createAttendace,updateAttendace } from "@/lib/actions";
 import { toast } from "react-toastify";
 
-const ResultForm = ({
+const AttendanceForm = ({
   setOpen,
   type,
   data,
@@ -25,13 +25,13 @@ const ResultForm = ({
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ResultSchema>({
-    resolver: zodResolver(resultSchema),
+  } = useForm<AttendaceSchema>({
+    resolver: zodResolver(attendaceSchema),
   });
   // AFTER REACT 19 IT'LL BE USEACTIONSTATE
 
   const [state, formAction] = useFormState(
-    type === "create" ? createResult : updateResult,
+    type === "create" ? createAttendace : updateAttendace,
     {
       success: false,
       error: false,
@@ -46,55 +46,43 @@ const ResultForm = ({
 
   useEffect(() => {
     if (state.success) {
-      toast(`Result has been ${type === "create" ? "created" : "updated"}!`);
+      toast(`Attendance has been ${type === "create" ? "created" : "updated"}!`);
       setOpen(false);
       router.refresh();
     }
   }, [state, router, type, setOpen]);
 
-  const { exams, assignments, subjects, students } = relatedData;
-  const elements = exams.concat(assignments)
+  const { students, lessons } = relatedData;
   return (
 
     <form className="flex flex-col gap-8" onSubmit={onSubmit}>
       <h1 className="text-lg font-semibold ">{type === "create" ? "Create a New Result" : "Update Result"}</h1>
       <div className="flex justify-between flex-wrap gap-4">
-        <div className="flex flex-col gap-2 w-full md:w-1/4">
-          <label className="text-xs text-gray-500">Title</label>
+      <InputField
+          label="Date"
+          name="date"
+          defaultValue={data?.date.toISOString().split("T")[0]}
+          register={register}
+          error={errors?.date}
+          type="date"
+        />
+       <div className="flex flex-col gap-2 w-full md:w-1/4">
+          <label className="text-xs text-gray-500">Lesson</label>
           <select
             className="ring-[1.5px] ring-gray-300 p-2 rounded-md text-sm w-full"
-            {...register("title")}
-            defaultValue={data?.title}
-            
+            {...register("lessonId")}
+            defaultValue={data?.lessonId}
           >
-            {elements.map((element: { id: string; title: string }) => (
-              <option value={[element.id,element.title]} key={element.id}>
-                {element.title}
+            {lessons.map((lesson: { id: number; name: string}) => (
+              <option value={lesson.id} key={lesson.id}>
+                {lesson.name}
               </option>
             ))}
+
           </select>
-          {errors.title?.message && (
+          {errors.lessonId?.message && (
             <p className="text-xs text-red-400">
-              {errors.title.message.toString()}
-            </p>
-          )}
-        </div>
-        <div className="flex flex-col gap-2 w-full md:w-1/4">
-          <label className="text-xs text-gray-500">Subject</label>
-          <select
-            className="ring-[1.5px] ring-gray-300 p-2 rounded-md text-sm w-full"
-            {...register("subject")}
-            defaultValue={data?.subject}
-          >
-            {subjects.map((subject: { id: number; name: string }) => (
-              <option value={subject.id} key={subject.id}>
-                {subject.name}
-              </option>
-            ))}
-          </select>
-          {errors.subject?.message && (
-            <p className="text-xs text-red-400">
-              {errors.subject.message.toString()}
+              {errors.lessonId.message.toString()}
             </p>
           )}
         </div>
@@ -103,7 +91,7 @@ const ResultForm = ({
           <select
             className="ring-[1.5px] ring-gray-300 p-2 rounded-md text-sm w-full"
             {...register("studentId")}
-            defaultValue={data?.parentId}
+            defaultValue={data?.studentId}
           >
             {students.map((student: { id: number; name: string, surname: string }) => (
               <option value={student.id} key={student.id}>
@@ -118,13 +106,22 @@ const ResultForm = ({
             </p>
           )}
         </div>
-        <InputField
-          label="Score"
-          name="score"
-          defaultValue={data?.score}
-          register={register}
-          error={errors?.score}
-        />
+        <div className="flex flex-col gap-2 w-full md:w-1/4">
+          <label className="text-xs text-gray-500">Present</label>
+          <select
+            className="ring-[1.5px] ring-gray-300 p-2 rounded-md text-sm w-full"
+            {...register("present")}
+            defaultValue={data?.present}
+          >
+            <option value="true">True</option>
+            <option value="false">False</option>
+          </select> 
+          {errors.present?.message && (
+            <p className="text-xs text-red-400">
+              {errors.present.message.toString()}
+            </p>
+          )}
+        </div>
         {data && (
           <InputField
             label="Id"
@@ -142,4 +139,4 @@ const ResultForm = ({
     </form>
   )
 }
-export default ResultForm
+export default AttendanceForm

@@ -3,14 +3,14 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import InputField from "../comp/inputField";
-import { ExamSchema,examSchema } from "@/lib/formValidationSchemas";
+import { eventSchema, EventSchema, ExamSchema,examSchema } from "@/lib/formValidationSchemas";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useFormState } from "react-dom";
-import { createExam,updateExam } from "@/lib/actions";
+import { createEvent, createExam,updateEvent,updateExam } from "@/lib/actions";
 import { toast } from "react-toastify";
 
-const ExamForm =  ({
+const EventForm =  ({
     setOpen,
     type,
     data,
@@ -25,13 +25,13 @@ const ExamForm =  ({
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm<ExamSchema>({
-        resolver: zodResolver(examSchema),
+    } = useForm<EventSchema>({
+        resolver: zodResolver(eventSchema),
     });
 // AFTER REACT 19 IT'LL BE USEACTIONSTATE
 
 const [state, formAction] = useFormState(
-    type === "create" ? createExam: updateExam,
+    type === "create" ? createEvent: updateEvent,
     {
       success: false,
       error: false,
@@ -46,24 +46,32 @@ const [state, formAction] = useFormState(
 
   useEffect(() => {
     if (state.success) {
-      toast(`Exam has been ${type === "create" ? "created" : "updated"}!`);
+      toast(`Event has been ${type === "create" ? "created" : "updated"}!`);
       setOpen(false);
       router.refresh();
     }
   }, [state, router, type,setOpen]);
    
-  const {lessons}=relatedData;
+  const {classes}=relatedData;
     return (
 
         <form className="flex flex-col gap-8" onSubmit={onSubmit}>
-            <h1 className="text-lg font-semibold ">{type === "create" ? "Create a New Exam" : "Update Exam"}</h1>
+            <h1 className="text-lg font-semibold ">{type === "create" ? "Create a New Event" : "Update Event"}</h1>
             <div className="flex justify-between flex-wrap gap-4">
             <InputField
-          label="Exam title"
+          label="Event title"
           name="title"
           defaultValue={data?.title}
           register={register}
           error={errors?.title}
+        />
+        <InputField
+          label="Event Description"
+          name="description"
+          defaultValue={data?.description}
+          register={register}
+          error={errors?.description}
+          type="textarea"
         />
         <InputField
           label="Start Date"
@@ -92,27 +100,27 @@ const [state, formAction] = useFormState(
           />
         )}
         <div className="flex flex-col gap-2 w-full md:w-1/4">
-          <label className="text-xs text-gray-500">Lesson</label>
+          <label className="text-xs text-gray-500">Class</label>
           <select
             className="ring-[1.5px] ring-gray-300 p-2 rounded-md text-sm w-full"
-            {...register("lessonId")}
-            defaultValue={data?.teachers}
+            {...register("classId")}
+            defaultValue={data?.classId}
           >
-            {lessons.map(
-              (lesson: { id: string; name: string;}) => (
+            {classes.map(
+              (item: { id: string; name: string;}) => (
                 <option
-                  value={lesson.id}
-                  key={lesson.id}
-                  selected={data && lesson.id === data.lessonId}
+                  value={item.id}
+                  key={item.id}
+                  selected={data && item.id === data.classId}
                 >
-                  {lesson.name}
+                  {item.name}
                 </option>
               )
             )}
           </select>
-          {errors.lessonId?.message && (
+          {errors.classId?.message && (
             <p className="text-xs text-red-400">
-              {errors.lessonId.message.toString()}
+              {errors.classId.message.toString()}
             </p>
           )}
         </div>
@@ -122,4 +130,4 @@ const [state, formAction] = useFormState(
         </form>
     )
 }
-export default ExamForm
+export default EventForm

@@ -18,12 +18,11 @@ const AttendanceChartContainer = async () => {
       },
     },
     select: {
-      date: true,
-      present: true,
+        date:true,
+      present:true
     },
   });
 
-  // console.log(data)
 
   const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri"];
 

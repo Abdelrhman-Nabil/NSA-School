@@ -37,7 +37,6 @@ const [state, formAction] = useFormState(
   );
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
     formAction(data);
   });
 

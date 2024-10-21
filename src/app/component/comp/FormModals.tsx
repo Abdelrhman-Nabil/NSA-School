@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { FormContaierProps } from "./formContianer";
-import { deleteAssignment, deleteClass, deleteExam, deleteGrade, deleteLesson, deleteParent, deleteResult, deleteStudent, deleteSubject, deleteTeacher } from "@/lib/actions";
+import { deleteAnnouncement, deleteAssignment, deleteAttendance, deleteClass, deleteEvent, deleteExam, deleteGrade, deleteLesson, deleteParent, deleteResult, deleteStudent, deleteSubject, deleteTeacher } from "@/lib/actions";
 import { useFormState } from "react-dom";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
@@ -16,6 +16,9 @@ import ParentForm from "../forms/parentForm";
 import AssignmentForm from "../forms/assignmentForm";
 import LessonsForm from "../forms/lessonForm";
 import ResultForm from "../forms/resultForm";
+import EventForm from "../forms/eventForm";
+import AnnouncementForm from "../forms/AnnouncementForm";
+import AttendanceForm from "../forms/attendanceForm";
 
 
 
@@ -30,9 +33,9 @@ const deleteActionMap:any = {
   lesson: deleteLesson,
   grade: deleteGrade,
   result: deleteResult,
-//   attendance: deleteSubject,
-//   event: deleteSubject,
-//   announcement: deleteSubject,
+  event: deleteEvent,
+  announcement: deleteAnnouncement,
+  attendance: deleteAttendance,
 };
 
 const Forms:{
@@ -108,6 +111,30 @@ const Forms:{
           data={data}
           relatedData={relatedData}
 
+        />
+    ,event: (setOpen,type, data,relatedData) => 
+          <EventForm
+            setOpen={setOpen}
+            type={type}
+            data={data}
+            relatedData={relatedData}
+  
+          />
+    ,announcement: (setOpen,type, data,relatedData) => 
+      <AnnouncementForm
+        setOpen={setOpen}
+        type={type}
+        data={data}
+        relatedData={relatedData}
+
+      />
+      ,attendance: (setOpen,type, data,relatedData) => 
+        <AttendanceForm
+          setOpen={setOpen}
+          type={type}
+          data={data}
+          relatedData={relatedData}
+  
         />
 
 }

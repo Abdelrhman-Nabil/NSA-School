@@ -83,10 +83,10 @@ const ReusltListPage = async ({
       <td className="hidden md:table-cell">{item.className}</td>
       <td className="hidden md:table-cell">{item.studentName + " " + item.studentSurname}</td>
       <td className="hidden md:table-cell">{item.score}</td>
-      {new Intl.DateTimeFormat("en-US").format(item.startTime)}
+      {new Intl.DateTimeFormat("en-GB").format(item.startTime)}
       <td>
         <div className="flex items-center gap-2">
-          {role === "admin" && (
+          {(role === "admin" || role === "teacher") && (
             <>
               <FormContianer table="result" type="update" data={item} />
               <FormContianer table="result" type="delete" id={item.id} />
@@ -176,7 +176,6 @@ const ReusltListPage = async ({
     }),
     prisma.result.count({ where: query }),
   ]);
-   console.log(dataRes,"000000000000")
   const data = dataRes.map((item) => {
     const assessment = item.exam || item.assignment;
 
@@ -207,7 +206,7 @@ const ReusltListPage = async ({
             <button className="w-8 h-8 flex items-center justify-center rounded-full bg-[#FAE27C]">
               <Image src="/sort.png" alt="" width={14} height={14} />
             </button>
-            {role === "admin" && (
+            {(role === "admin" || role === "teacher") && (
 
               <FormContianer table="result" type="create" />
             )}

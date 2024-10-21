@@ -1,9 +1,11 @@
 import prisma from "@/lib/prisma";
-import { currnetUserId, role } from "@/lib/utils";
+
 import { auth } from "@clerk/nextjs/server";
 
 const Announcements = async () => {
-
+  const {userId,sessionClaims } = auth();
+  const role = (sessionClaims?.metadata as { role?: string })?.role;
+  const currnetUserId=userId!;
   const roleConditions = {
     teacher: { lessons: { some: { teacherId: currnetUserId! } } },
     student: { students: { some: { id: currnetUserId! } } },

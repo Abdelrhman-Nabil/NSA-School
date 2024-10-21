@@ -4,8 +4,11 @@ import { revalidatePath } from "next/cache";
 import { Day, PrismaClient, UserSex } from "@prisma/client";
 
 import {
+  AnnouncementSchema,
   AssignmentSchema,
+  AttendaceSchema,
   ClassSchema,
+  EventSchema,
   ExamSchema,
   GradeSchema,
   LessonSchema,
@@ -37,7 +40,6 @@ export const createSubject = async (
     // revalidatePath("/list/subjects");
     return { success: true, error: false };
   } catch (err) {
-    console.log(err);
     return { success: false, error: true };
   }
 };
@@ -62,7 +64,6 @@ export const updateSubject = async (
     // revalidatePath("/list/subjects");
     return { success: true, error: false };
   } catch (err) {
-    console.log(err);
     return { success: false, error: true };
   }
 };
@@ -82,7 +83,6 @@ export const deleteSubject = async (
     // revalidatePath("/list/subjects");
     return { success: true, error: false };
   } catch (err) {
-    console.log(err);
     return { success: false, error: true };
   }
 };
@@ -99,7 +99,6 @@ export const createClass = async (
     // revalidatePath("/list/class");
     return { success: true, error: false };
   } catch (err) {
-    console.log(err);
     return { success: false, error: true };
   }
 };
@@ -119,7 +118,6 @@ export const updateClass = async (
     // revalidatePath("/list/class");
     return { success: true, error: false };
   } catch (err) {
-    console.log(err);
     return { success: false, error: true };
   }
 };
@@ -139,7 +137,6 @@ export const deleteClass = async (
     // revalidatePath("/list/class");
     return { success: true, error: false };
   } catch (err) {
-    console.log(err);
     return { success: false, error: true };
   }
 };
@@ -181,7 +178,6 @@ export const createTeacher = async (
     // revalidatePath("/list/teachers");
     return { success: true, error: false };
   } catch (err) {
-    console.log(err);
     return { success: false, error: true };
   }
 };
@@ -227,7 +223,6 @@ export const updateTeacher = async (
     // revalidatePath("/list/teachers");
     return { success: true, error: false };
   } catch (err) {
-    console.log(err);
     return { success: false, error: true };
   }
 };
@@ -249,7 +244,6 @@ export const deleteTeacher = async (
     // revalidatePath("/list/teachers");
     return { success: true, error: false };
   } catch (err) {
-    console.log(err);
     return { success: false, error: true };
   }
 };
@@ -301,7 +295,6 @@ export const createStudent = async (
     // revalidatePath("/list/studnet");
     return { success: true, error: false };
   } catch (err) {
-    console.log(err);
     return { success: false, error: true };
   }
 };
@@ -348,7 +341,6 @@ export const updateStudent = async (
     // revalidatePath("/list/student");
     return { success: true, error: false };
   } catch (err) {
-    console.log(err);
     return { success: false, error: true };
   }
 };
@@ -370,7 +362,6 @@ export const deleteStudent = async (
     // revalidatePath("/list/student");
     return { success: true, error: false };
   } catch (err) {
-    console.log(err);
     return { success: false, error: true };
   }
 };
@@ -392,7 +383,6 @@ export const createExam = async (
     // revalidatePath("/list/exams");
     return { success: true, error: false };
   } catch (err) {
-    console.log(err);
     return { success: false, error: true };
   }
 };
@@ -417,7 +407,6 @@ export const updateExam = async (
     // revalidatePath("/list/exams");
     return { success: true, error: false };
   } catch (err) {
-    console.log(err);
     return { success: false, error: true };
   }
 };
@@ -437,7 +426,6 @@ export const deleteExam = async (
     // revalidatePath("/list/exams");
     return { success: true, error: false };
   } catch (err) {
-    console.log(err);
     return { success: false, error: true };
   }
 };
@@ -477,7 +465,6 @@ export const createParent = async (
     // revalidatePath("/list/parents");
     return { success: true, error: false };
   } catch (err) {
-    console.log(err);
     return { success: false, error: true };
   }
 };
@@ -521,7 +508,6 @@ export const updateParent = async (
     // revalidatePath("/list/parents");
     return { success: true, error: false };
   } catch (err) {
-    console.log(err);
     return { success: false, error: true };
   }
 };
@@ -543,7 +529,6 @@ export const deleteParent  = async (
     // revalidatePath("/list/parents");
     return { success: true, error: false };
   } catch (err) {
-    console.log(err);
     return { success: false, error: true };
   }
 };
@@ -565,7 +550,6 @@ export const createAssignment = async (
     // revalidatePath("/list/assignmets");
     return { success: true, error: false };
   } catch (err) {
-    console.log(err);
     return { success: false, error: true };
   }
 };
@@ -590,7 +574,6 @@ export const updateAssignment = async (
     // revalidatePath("/list/assignments");
     return { success: true, error: false };
   } catch (err) {
-    console.log(err);
     return { success: false, error: true };
   }
 };
@@ -610,7 +593,6 @@ export const deleteAssignment = async (
     // revalidatePath("/list/assignments");
     return { success: true, error: false };
   } catch (err) {
-    console.log(err);
     return { success: false, error: true };
   }
 };
@@ -639,7 +621,6 @@ export const createLesson = async (
     // revalidatePath("/list/lessons");
     return { success: true, error: false };
   } catch (err) {
-    console.log(err);
     return { success: false, error: true };
   }
 };
@@ -668,7 +649,6 @@ export const updateLesson = async (
     // revalidatePath("/list/lessons");
     return { success: true, error: false };
   } catch (err) {
-    console.log(err);
     return { success: false, error: true };
   }
 };
@@ -688,7 +668,6 @@ export const deleteLesson = async (
     // revalidatePath("/list/lessons");
     return { success: true, error: false };
   } catch (err) {
-    console.log(err);
     return { success: false, error: true };
   }
 };
@@ -706,7 +685,6 @@ export const createGrade = async (
     // revalidatePath("/list/Grades");
     return { success: true, error: false };
   } catch (err) {
-    console.log(err);
     return { success: false, error: true };
   }
 };
@@ -728,7 +706,6 @@ export const updateGrade = async (
     // revalidatePath("/list/grades");
     return { success: true, error: false };
   } catch (err) {
-    console.log(err);
     return { success: false, error: true };
   }
 };
@@ -748,7 +725,6 @@ export const deleteGrade = async (
     // revalidatePath("/list/grades");
     return { success: true, error: false };
   } catch (err) {
-    console.log(err);
     return { success: false, error: true };
   }
 };
@@ -783,7 +759,6 @@ try {
     // revalidatePath("/list/results");
     return { success: true, error: false };
   } catch (err) {
-    console.log(err);
     return { success: false, error: true };
   }
 };
@@ -819,7 +794,6 @@ export const updateResult = async (
     // revalidatePath("/list/results");
     return { success: true, error: false };
   } catch (err) {
-    console.log(err);
     return { success: false, error: true };
   }
 };
@@ -839,7 +813,202 @@ export const deleteResult = async (
     // revalidatePath("/list/results");
     return { success: true, error: false };
   } catch (err) {
-    console.log(err);
+    return { success: false, error: true };
+  }
+};
+
+export const createEvent = async (
+  currentState: CurrentState,
+  data: EventSchema
+) => {
+  try {
+    await prisma.event.create({
+      data: {
+       title:data.title,
+       description:data.description,
+       startTime:data.startTime,
+       endTime:data.endTime,
+      classId:data.classId
+      },
+    });
+
+    // revalidatePath("/list/events");
+    return { success: true, error: false };
+  } catch (err) {
+    return { success: false, error: true };
+  }
+};
+
+export const updateEvent = async (
+  currentState: CurrentState,
+  data: EventSchema
+) => {
+  try {
+    await prisma.event.update({
+     where:{
+      id:data.id
+     },
+      data:{
+      title:data.title,
+      description:data.description,
+      startTime:data.startTime,
+      endTime:data.endTime,
+      classId:data.classId
+     },
+    });
+
+    // revalidatePath("/list/events");
+    return { success: true, error: false };
+  } catch (err) {
+    return { success: false, error: true };
+  }
+};
+
+export const deleteEvent = async (
+  currentState: CurrentState,
+  data: FormData
+) => {
+  const id = data.get("id") as string;
+  try {
+    await prisma.event.delete({
+      where: {
+        id: parseInt(id),
+      },
+    });
+
+    // revalidatePath("/list/events");
+    return { success: true, error: false };
+  } catch (err) {
+    return { success: false, error: true };
+  }
+};
+
+export const createAnnouncement = async (
+  currentState: CurrentState,
+  data: AnnouncementSchema
+) => {
+  try {
+    await prisma.announcement.create({
+      data: {
+       title:data.title,
+       description:data.description,
+       date:data.date,
+      classId:data.classId
+      },
+    });
+
+    // revalidatePath("/list/announcements");
+    return { success: true, error: false };
+  } catch (err) {
+    return { success: false, error: true };
+  }
+};
+
+export const updateAnnouncement = async (
+  currentState: CurrentState,
+  data: AnnouncementSchema
+) => {
+  try {
+    await prisma.announcement.update({
+     where:{
+      id:data.id
+     },
+      data:{
+      title:data.title,
+      description:data.description,
+      date:data.date,
+      classId:data.classId
+     },
+    });
+
+    // revalidatePath("/list/announcements");
+    return { success: true, error: false };
+  } catch (err) {
+    return { success: false, error: true };
+  }
+};
+
+export const deleteAnnouncement = async (
+  currentState: CurrentState,
+  data: FormData
+) => {
+  const id = data.get("id") as string;
+  try {
+    await prisma.announcement.delete({
+      where: {
+        id: parseInt(id),
+      },
+    });
+
+    // revalidatePath("/list/announcements");
+    return { success: true, error: false };
+  } catch (err) {
+    return { success: false, error: true };
+  }
+};
+
+export const createAttendace = async (
+  currentState: CurrentState,
+  data: AttendaceSchema
+) => {
+  try {
+    await prisma.attendance.create({
+      data: {
+       id:data.id,
+       date:data.date,
+       present:data.present,
+       studentId:data.studentId,
+       lessonId:data.lessonId
+      },
+    });
+
+    // revalidatePath("/list/attendace");
+    return { success: true, error: false };
+  } catch (err) {
+    return { success: false, error: true };
+  }
+};
+
+export const updateAttendace = async (
+  currentState: CurrentState,
+  data: AttendaceSchema
+) => {
+  try {
+    await prisma.attendance.update({
+     where:{
+      id:data.id
+     },
+     data: {
+      id:data.id,
+      date:data.date,
+      present:data.present,
+      studentId:data.studentId,
+      lessonId:data.lessonId
+     },
+    });
+
+    // revalidatePath("/list/attendace");
+    return { success: true, error: false };
+  } catch (err) {
+    return { success: false, error: true };
+  }
+};
+
+export const deleteAttendance = async (
+  currentState: CurrentState,
+  data: FormData
+) => {
+  const id = data.get("id") as string;
+  try {
+    await prisma.attendance.delete({
+      where: {
+        id: parseInt(id),
+      },
+    });
+
+    // revalidatePath("/list/attendance");
+    return { success: true, error: false };
+  } catch (err) {
     return { success: false, error: true };
   }
 };

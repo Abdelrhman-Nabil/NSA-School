@@ -106,3 +106,9 @@
   color: gray !important;
   margin-bottom: 5px;
 }
+.bgi{
+  background-image: url("../../public/school1.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}

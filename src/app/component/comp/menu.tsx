@@ -31,7 +31,7 @@ const menuItems = [
           visible: ["admin", "teacher"],
         },
         {
-          icon: "/level.png",
+          icon: "/grades.png",
           label: "Grades",
           href: "/list/grades",
           visible: ["admin"],
@@ -126,7 +126,6 @@ const menuItems = [
 const Menu=async()=>{
   const {sessionClaims } = auth();
   const role = (sessionClaims?.metadata as { role?: string })?.role;
-  console.log(role)
     return(
     <div className="mt-4 text-sm">
       {menuItems.map(i=>(

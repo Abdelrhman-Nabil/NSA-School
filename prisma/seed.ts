@@ -1,4 +1,4 @@
-import { Day, PrismaClient, UserSex, } from "@prisma/client";
+import { Day, PrismaClient, UserSex} from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
@@ -84,9 +84,8 @@ async function main() {
             Math.floor(Math.random() * Object.keys(Day).length)
           ] as keyof typeof Day
         ], 
-        startTime: `12:${i} AM`, 
-        endTime: `12:${i*5} AM`, 
-        subjectId: (i % 10) + 1, 
+        startTime: new Date(new Date().setHours(new Date().getHours() + 1)), 
+        endTime: new Date(new Date().setHours(new Date().getHours() + 3)),        subjectId: (i % 10) + 1, 
         classId: (i % 6) + 1, 
         teacherId: `teacher${(i % 15) + 1}`, 
       },
@@ -171,7 +170,8 @@ async function main() {
     await prisma.attendance.create({
       data: {
         date: new Date(), 
-        present: true, 
+        present: "true",
+
         studentId: `student${i}`, 
         lessonId: (i % 30) + 1, 
       },

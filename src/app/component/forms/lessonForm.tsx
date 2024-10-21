@@ -38,7 +38,6 @@ const LessonsForm =  ({
     );
   
     const onSubmit = handleSubmit((data) => {
-      console.log(data);
       formAction(data);
     });
 
@@ -91,7 +90,7 @@ const LessonsForm =  ({
             defaultValue={data?.startTime}
             register={register}
             error={errors?.startTime}
-            type="time"
+            type="datetime-local"
           />
           <InputField
             label="End Time"
@@ -99,7 +98,7 @@ const LessonsForm =  ({
             defaultValue={data?.endTime}
             register={register}
             error={errors?.endTime}
-            type="time"
+            type="datetime-local"
           />
                   {data && (
             <InputField

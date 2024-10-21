@@ -2,6 +2,9 @@
 CREATE TYPE "UserSex" AS ENUM ('MALE', 'FEMALE');
 
 -- CreateEnum
+CREATE TYPE "PresentBoolean" AS ENUM ('TRUE', 'FALSE');
+
+-- CreateEnum
 CREATE TYPE "Day" AS ENUM ('MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY');
 
 -- CreateTable
@@ -97,8 +100,8 @@ CREATE TABLE "Lesson" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "day" "Day" NOT NULL,
-    "startTime" TEXT NOT NULL,
-    "endTime" TEXT NOT NULL,
+    "startTime" TIMESTAMP(3) NOT NULL,
+    "endTime" TIMESTAMP(3) NOT NULL,
     "subjectId" INTEGER NOT NULL,
     "classId" INTEGER NOT NULL,
     "teacherId" TEXT NOT NULL,
@@ -145,7 +148,7 @@ CREATE TABLE "Result" (
 CREATE TABLE "Attendance" (
     "id" SERIAL NOT NULL,
     "date" TIMESTAMP(3) NOT NULL,
-    "present" BOOLEAN NOT NULL,
+    "present" TEXT NOT NULL,
     "studentId" TEXT NOT NULL,
     "lessonId" INTEGER NOT NULL,
 

@@ -99,8 +99,8 @@ model Lesson {
   id         Int      @id @default(autoincrement())
   name       String
   day        Day
-  startTime  String
-  endTime    String
+  startTime  DateTime
+  endTime    DateTime
 
   subjectId   Int
   subject     Subject      @relation(fields: [subjectId], references: [id])
@@ -149,9 +149,9 @@ model Result {
 }
 
 model Attendance {
-  id      Int      @id @default(autoincrement())
-  date    DateTime
-  present Boolean
+  id       Int      @id @default(autoincrement())
+  date     DateTime
+  present  String
 
   studentId String
   student   Student @relation(fields: [studentId], references: [id])
@@ -184,7 +184,10 @@ enum UserSex {
   MALE
   FEMALE
 }
-
+enum PresentBoolean{
+  TRUE
+  FALSE
+}
 enum Day {
   MONDAY
   TUESDAY

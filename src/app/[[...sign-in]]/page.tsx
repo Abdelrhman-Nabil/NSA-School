@@ -18,7 +18,8 @@ import { useEffect } from 'react';
   },[user,route])
 
     return(
-  <div className="h-screen flex items-center justify-center bg-[#EDF9FD]">
+  <div className="bgi h-screen flex items-center justify-center
+   ">
       <SignIn.Root>
         <SignIn.Step
           name="start"
